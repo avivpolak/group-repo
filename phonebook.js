@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const cors = require("cors");
+const path = require("path");
+app.use(cors());
 app.use(express.json());
 
 morgan.token("body", function (req, res) {
@@ -51,7 +54,6 @@ app.get("/api/persons", (request, response) => {
 app.get("/api/persons/:id", (request, response) => {
     const id = Number(request.params.id);
     const person = data.find((person) => person.id === id);
-    console.log(person);
     if (person) {
         response.json(person);
     } else {
@@ -99,8 +101,16 @@ app.post("/api/persons", (request, response) => {
 
     response.json(data);
 });
+app.use(
+    "/",
+    express.static(path.join(__dirname, "./phonebookFront/phonebook.html"))
+); // serve main path as static dir
+app.get("/", function (req, res) {
+    // serve main path as static file
+    res.sendFile(path.join(__dirname, "./phonebookFront/phonebook.html"));
+});
 
-const PORT = 3002;
+const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
