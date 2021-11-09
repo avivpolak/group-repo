@@ -112,7 +112,7 @@ app.get("/", function (req, res) {
 
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on Port ${PORT}`);
 });
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
