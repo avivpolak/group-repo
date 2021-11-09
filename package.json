@@ -2,10 +2,10 @@
     "name": "backend",
     "version": "0.0.1",
     "description": "\"\"",
-    "main": "index.js",
+    "main": "phonebook.js",
     "scripts": {
         "build": "webpack",
-        "start": "node index.js",
+        "start": "node phonebook.js",
         "dev": "nodemon phonebook.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
