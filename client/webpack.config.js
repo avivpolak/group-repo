@@ -6,10 +6,10 @@ module.exports = {
         topLevelAwait: true,
     },
     entry: {
-        main: path.resolve(__dirname, `./src/src.js`),
+        main: path.join(__dirname, `./src/src.js`),
     },
     output: {
-        path: path.resolve(__dirname, `dist`),
+        path: path.join(__dirname, `dist`),
         filename: `[name].js`,
         clean: true,
     },
@@ -19,7 +19,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: `group-project`,
             filename: `phonebook.html`,
-            template: path.resolve(__dirname, `./src/phonebook.html`),
+            template: path.join(__dirname, `./src/phonebook.html`),
         }),
     ],
 };
