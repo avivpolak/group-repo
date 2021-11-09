@@ -101,13 +101,10 @@ app.post("/api/persons", (request, response) => {
 
     response.json(data);
 });
-app.use(
-    "/",
-    express.static(path.join(__dirname, "/client/dist/phonebook.html"))
-); // serve main path as static dir
+app.use("/", express.static(path.join(__dirname, "/dist/phonebook.html"))); // serve main path as static dir
 app.get("/", function (req, res) {
     // serve main path as static file
-    res.sendFile(path.join(__dirname, "/client/dist/phonebook.html"));
+    res.sendFile(path.join(__dirname, "/dist/phonebook.html"));
 });
 
 const PORT = process.env.PORT || 3002;
