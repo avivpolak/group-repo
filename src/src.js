@@ -1,5 +1,5 @@
-// const baseUrl = "http://localhost:3002/";
-const baseUrl = "/";
+const baseUrl = `http://localhost:3019/`;
+
 document.getElementById("add").addEventListener("click", handlePost);
 document.getElementById("list").addEventListener("click", handleEventPerson);
 

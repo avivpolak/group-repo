@@ -1,12 +1,12 @@
 (() => {
-    const t = "https://avivphonebook.herokuapp.com/";
+    const t = "http://localhost:3020/";
     document.getElementById("add").addEventListener("click", async function () {
         let t = document.getElementById("name").value,
             e = document.getElementById("number").value;
         await (async (t, e) => {
             const n = { name: t, number: e };
             return axios
-                .post("https://avivphonebook.herokuapp.com/api/persons/", n)
+                .post("http://localhost:3020/api/persons/", n)
                 .then((t) => t.data);
         })(t, e),
             a();

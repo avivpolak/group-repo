@@ -72,7 +72,6 @@ app.post("/api/persons", (request, response) => {
             error: "number missing",
         });
     }
-
     const person = new Person({
         name: name,
         number: number,
@@ -81,10 +80,12 @@ app.post("/api/persons", (request, response) => {
     person
         .save()
         .then((savedPerson) => {
-            response.json(savedPerson);
+            response.send("saved");
         })
         .catch((error) => {
-            response.status(404).send(error);
+            if (error.code === 11000) {
+                response.status(400).send("duplicated number");
+            } else response.status(404).send(error);
         });
 });
 app.use("/", express.static(path.join(__dirname, "/dist"))); // serve main path as static dir
@@ -93,20 +94,7 @@ app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, "/dist/phonebook.html"));
 });
 
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on Port ${PORT}`);
 });
-function getRandomIntInclusive(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
-}
-function isExsists(name) {
-    for (let person of data) {
-        if (person.name === name) {
-            return true;
-        }
-    }
-    return false;
-}
