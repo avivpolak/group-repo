@@ -94,7 +94,7 @@ app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, "/dist/phonebook.html"));
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3021;
 app.listen(PORT, () => {
     console.log(`Server running on Port ${PORT}`);
 });
