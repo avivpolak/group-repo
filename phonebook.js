@@ -34,54 +34,58 @@ app.get("/api/persons", (request, response) => {
     });
 });
 app.get("/api/persons/:id", (request, response) => {
-    const id = Number(request.params.id);
-    const person = data.find((person) => person.id === id);
-    if (person) {
-        response.json(person);
-    } else {
-        response.status(404).end();
-    }
+    Person.findById(request.params.id)
+        .then((person) => {
+            response.json(person);
+        })
+        .catch((error) => {
+            response.status(404).send(error);
+        });
 });
 app.get("/info", (request, response) => {
     const date = new Date();
-    response.send(
-        `Phonebook has info for ${Object.entries(data).length} people ,${date}`
-    );
+    Person.count({}, function (err, count) {
+        if (err) {
+            response.status(404).send(err);
+        }
+        response.send(`Phonebook has info for ${count} people ,${date}`);
+    });
 });
 app.delete("/api/persons/:id", (request, response) => {
-    const id = Number(request.params.id);
-    data = data.filter((person) => person.id !== id);
-    response.status(204).end();
+    Person.deleteOne({ id: request.params.id }, function (err) {
+        if (err) {
+            return response.status(404).send(err);
+        }
+        response.send("deleted");
+    });
 });
 
 app.post("/api/persons", (request, response) => {
-    const body = request.body;
-
-    if (!body.name) {
+    const { name, number } = request.body;
+    if (!name) {
         return response.status(400).json({
             error: "name missing",
         });
     }
-    if (!body.number) {
+    if (!number) {
         return response.status(400).json({
             error: "number missing",
         });
     }
-    if (isExsists(body.name)) {
-        return response.status(400).json({
-            error: "name already exsists",
+
+    const person = new Person({
+        name: name,
+        number: number,
+    });
+
+    person
+        .save()
+        .then((savedPerson) => {
+            response.json(savedPerson);
+        })
+        .catch((error) => {
+            response.status(404).send(error);
         });
-    }
-
-    const person = {
-        name: body.name,
-        number: body.number,
-        id: getRandomIntInclusive(0, 999999999999),
-    };
-
-    data = data.concat(person);
-
-    response.json(data);
 });
 app.use("/", express.static(path.join(__dirname, "/dist"))); // serve main path as static dir
 app.get("/", function (req, res) {
