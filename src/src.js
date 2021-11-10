@@ -1,4 +1,4 @@
-const baseUrl = `/`;
+const baseUrl = `https://avivphonebook.herokuapp.com/`;
 
 document.getElementById("add").addEventListener("click", handlePost);
 document.getElementById("list").addEventListener("click", handleEventPerson);
